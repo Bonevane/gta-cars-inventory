@@ -1,0 +1,9 @@
+<h1><%= manufacturer.name %></h1>
+<a href="/manufacturers/<%= manufacturer.id %>/edit">Edit</a>
+<form
+  method="POST"
+  action="/manufacturers/<%= manufacturer.id %>?_method=DELETE"
+>
+  <button type="submit">Delete</button>
+</form>
+<a href="/manufacturers">Back to Manufacturers</a>

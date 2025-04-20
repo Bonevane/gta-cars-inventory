@@ -1,0 +1,6 @@
+<h1><%= carClass.name %></h1>
+<a href="/classes/<%= carClass.id %>/edit">Edit</a>
+<form method="POST" action="/classes/<%= carClass.id %>?_method=DELETE">
+  <button type="submit">Delete</button>
+</form>
+<a href="/classes">Back to Classes</a>

@@ -1,0 +1,38 @@
+<h1>Edit <%= car.name %></h1>
+<form method="POST" action="/cars/<%= car.id %>?_method=PUT">
+  <label for="name">Name:</label>
+  <input type="text" name="name" id="name" value="<%= car.name %>" required />
+  <label for="description">Description:</label>
+  <textarea name="description" id="description"><%= car.description || '' %></textarea>
+  <label for="top_speed">Top Speed:</label>
+  <input type="number" name="top_speed" id="top_speed" value="<%= car.top_speed || '' %>" min="0" />
+  <label for="acceleration">Acceleration:</label>
+  <input type="number" name="acceleration" id="acceleration" value="<%= car.acceleration || '' %>" step="0.01" min="0" />
+  <label for="price">Price:</label>
+  <input type="number" name="price" id="price" value="<%= car.price || '' %>" step="0.01" min="0" />
+  <label for="lap_time">Lap Time (seconds):</label>
+  <input type="number" name="lap_time" id="lap_time" value="<%= car.lap_time || '' %>" step="0.01" min="0" />
+  <label for="seats">Seats:</label>
+  <input type="number" name="seats" id="seats" value="<%= car.seats || '' %>" min="1" />
+  <label for="drivetrain">Drivetrain:</label>
+  <select name="drivetrain" id="drivetrain">
+    <option value="">Select Drivetrain</option>
+    <option value="FWD" <%= car.drivetrain === 'FWD' ? 'selected' : '' %>>FWD</option>
+    <option value="RWD" <%= car.drivetrain === 'RWD' ? 'selected' : '' %>>RWD</option>
+    <option value="AWD" <%= car.drivetrain === 'AWD' ? 'selected' : '' %>>AWD</option>
+  </select>
+  <label for="manufacturer_id">Manufacturer:</label>
+  <select name="manufacturer_id" id="manufacturer_id" required>
+    <% manufacturers.forEach(manufacturer => { %>
+    <option value="<%= manufacturer.id %>" <%= car.manufacturer_id === manufacturer.id ? 'selected' : '' %>><%= manufacturer.name %></option>
+    <% }) %>
+  </select>
+  <label for="class_id">Class:</label>
+  <select name="class_id" id="class_id" required>
+    <% classes.forEach(classItem => { %>
+    <option value="<%= classItem.id %>" <%= car.class_id === classItem.id ? 'selected' : '' %>><%= classItem.name %></option>
+    <% }) %>
+  </select>
+  <button type="submit">Update</button>
+</form>
+<a href="/cars">Cancel</a>

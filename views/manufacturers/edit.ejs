@@ -1,0 +1,7 @@
+<h1>Edit <%= manufacturer.name %></h1>
+<form method="POST" action="/manufacturers/<%= manufacturer.id %>?_method=PUT">
+  <label for="name">Name:</label>
+  <input type="text" name="name" id="name" value="<%= manufacturer.name %>" required>
+  <button type="submit">Update</button>
+</form>
+<a href="/manufacturers">Cancel</a>

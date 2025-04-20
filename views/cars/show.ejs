@@ -1,0 +1,17 @@
+<h1><%= car.name %></h1>
+<p>Description: <%= car.description || 'N/A' %></p>
+<p>Manufacturer: <%= car.manufacturer_name %></p>
+<p>Class: <%= car.class_name %></p>
+<p>Top Speed: <%= car.top_speed || 'N/A' %></p>
+<p>Acceleration: <%= car.acceleration || 'N/A' %></p>
+<p>Price: <%= car.price ? parseFloat(car.price).toFixed(2) : 'N/A' %></p>
+<p>
+  Lap Time: <%= car.lap_time ? parseFloat(car.lap_time).toFixed(2) : 'N/A' %>
+</p>
+<p>Seats: <%= car.seats || 'N/A' %></p>
+<p>Drivetrain: <%= car.drivetrain || 'N/A' %></p>
+<a href="/cars/<%= car.id %>/edit">Edit</a>
+<form method="POST" action="/cars/<%= car.id %>?_method=DELETE">
+  <button type="submit">Delete</button>
+</form>
+<a href="/cars">Back to Cars</a>
