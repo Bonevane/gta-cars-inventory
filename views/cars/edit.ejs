@@ -1,38 +1,34 @@
-<h1>Edit <%= car.name %></h1>
-<form method="POST" action="/cars/<%= car.id %>?_method=PUT">
-  <label for="name">Name:</label>
-  <input type="text" name="name" id="name" value="<%= car.name %>" required />
-  <label for="description">Description:</label>
-  <textarea name="description" id="description"><%= car.description || '' %></textarea>
-  <label for="top_speed">Top Speed:</label>
-  <input type="number" name="top_speed" id="top_speed" value="<%= car.top_speed || '' %>" min="0" />
-  <label for="acceleration">Acceleration:</label>
-  <input type="number" name="acceleration" id="acceleration" value="<%= car.acceleration || '' %>" step="0.01" min="0" />
-  <label for="price">Price:</label>
-  <input type="number" name="price" id="price" value="<%= car.price || '' %>" step="0.01" min="0" />
-  <label for="lap_time">Lap Time (seconds):</label>
-  <input type="number" name="lap_time" id="lap_time" value="<%= car.lap_time || '' %>" step="0.01" min="0" />
-  <label for="seats">Seats:</label>
-  <input type="number" name="seats" id="seats" value="<%= car.seats || '' %>" min="1" />
-  <label for="drivetrain">Drivetrain:</label>
-  <select name="drivetrain" id="drivetrain">
-    <option value="">Select Drivetrain</option>
-    <option value="FWD" <%= car.drivetrain === 'FWD' ? 'selected' : '' %>>FWD</option>
-    <option value="RWD" <%= car.drivetrain === 'RWD' ? 'selected' : '' %>>RWD</option>
-    <option value="AWD" <%= car.drivetrain === 'AWD' ? 'selected' : '' %>>AWD</option>
-  </select>
-  <label for="manufacturer_id">Manufacturer:</label>
-  <select name="manufacturer_id" id="manufacturer_id" required>
-    <% manufacturers.forEach(manufacturer => { %>
-    <option value="<%= manufacturer.id %>" <%= car.manufacturer_id === manufacturer.id ? 'selected' : '' %>><%= manufacturer.name %></option>
-    <% }) %>
-  </select>
-  <label for="class_id">Class:</label>
-  <select name="class_id" id="class_id" required>
-    <% classes.forEach(classItem => { %>
-    <option value="<%= classItem.id %>" <%= car.class_id === classItem.id ? 'selected' : '' %>><%= classItem.name %></option>
-    <% }) %>
-  </select>
-  <button type="submit">Update</button>
+<%- include('../partials/header') %>
+<h1><%= car ? "Edit" : "Add" %> Car</h1>
+<form method="POST" action="<%= car ? '/cars/' + car.id + '?_method=PUT' : '/cars' %>">
+  <label>Model: <input name="model" value="<%= car?.model || '' %>"></label><br>
+  <label>Price: <input name="price" type="number" value="<%= car?.price || '' %>"></label><br>
+  <label>Image URL: <input name="image_url" value="<%= car?.image_url || '' %>"></label><br>
+  <label>Engine Power: <input name="engine_power" type="number" value="<%= car?.engine_power || '' %>"></label><br>
+  <label>Weight: <input name="weight" type="number" value="<%= car?.weight || '' %>"></label><br>
+  <label>Doors: <input name="doors" type="number" value="<%= car?.doors || '' %>"></label><br>
+  <label>Drive Type: <input name="drive_type" value="<%= car?.drive_type || '' %>"></label><br>
+  <label>Lap Time: <input name="lap_time" type="number" step="0.01" value="<%= car?.lap_time || '' %>"></label><br>
+  <label>Top Speed: <input name="top_speed" type="number" value="<%= car?.top_speed || '' %>"></label><br>
+  <label>Drag Coefficient: <input name="drag_coefficient" type="number" step="0.01" value="<%= car?.drag_coefficient || '' %>"></label><br>
+  <label>Brake Force: <input name="brake_force" type="number" value="<%= car?.brake_force || '' %>"></label><br>
+
+  <label>Manufacturer:
+    <select name="manufacturer_id">
+      <% manufacturers.forEach(m => { %>
+        <option value="<%= m.id %>" <%= car?.manufacturer_id === m.id ? 'selected' : '' %>><%= m.name %></option>
+      <% }) %>
+    </select>
+  </label><br>
+
+  <label>Class:
+    <select name="class_id">
+      <% classes.forEach(c => { %>
+        <option value="<%= c.id %>" <%= car?.class_id === c.id ? 'selected' : '' %>><%= c.name %></option>
+      <% }) %>
+    </select>
+  </label><br>
+
+  <button>Submit</button>
 </form>
-<a href="/cars">Cancel</a>
+<%- include('../partials/footer') %>

@@ -1,172 +1,238 @@
-const pool = require("../db/pool");
+// controllers/carsController.js
+const db = require("../db/pool");
 
-exports.list = async (req, res) => {
-  try {
-    const result = await pool.query(`
-      SELECT c.*, m.name AS manufacturer_name, cl.name AS class_name
-      FROM cars c
-      JOIN manufacturers m ON c.manufacturer_id = m.id
-      JOIN classes cl ON c.class_id = cl.id
-    `);
-    res.render("cars/list", { cars: result.rows });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
+const countryCodeMap = {
+  USA: "us",
+  Germany: "de",
+  Japan: "jp",
+  UK: "gb",
+  Italy: "it",
+  France: "fr",
 };
 
-exports.show = async (req, res) => {
-  try {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) {
-      return res.status(400).send("Invalid car ID");
+module.exports = {
+  async list(req, res, next) {
+    try {
+      const carRes = await db.query(
+        `  SELECT 
+            cars.*, 
+            classes.name AS class_name, 
+            manufacturers.name AS manufacturer_name,
+            manufacturers.country AS country
+          FROM cars
+          JOIN classes ON cars.class_id = classes.id
+          JOIN manufacturers ON cars.manufacturer_id = manufacturers.id
+          ORDER BY cars.model
+        `
+      );
+
+      const manufacturerRes = await db.query(
+        `SELECT id, name FROM manufacturers ORDER BY name`
+      );
+      const classRes = await db.query(
+        `SELECT id, name FROM classes ORDER BY name`
+      );
+
+      carRes.rows.forEach((car) => {
+        car.country = countryCodeMap[car.country] || "xx";
+      });
+
+      res.render("cars/index", {
+        cars: carRes.rows,
+        manufacturers: manufacturerRes.rows,
+        classes: classRes.rows,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error loading cars");
     }
-    const result = await pool.query(
-      `
-      SELECT c.*, m.name AS manufacturer_name, cl.name AS class_name
-      FROM cars c
-      JOIN manufacturers m ON c.manufacturer_id = m.id
-      JOIN classes cl ON c.class_id = cl.id
-      WHERE c.id = $1
-    `,
-      [id]
-    );
-    const car = result.rows[0];
-    if (!car) return res.status(404).send("Car not found");
-    res.render("cars/show", { car });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
-};
+  },
 
-exports.new = async (req, res) => {
-  try {
-    const [manufacturersResult, classesResult] = await Promise.all([
-      pool.query("SELECT * FROM manufacturers"),
-      pool.query("SELECT * FROM classes"),
-    ]);
-    res.render("cars/new", {
-      manufacturers: manufacturersResult.rows,
-      classes: classesResult.rows,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
-};
+  newForm(req, res, next) {
+    // Need manufacturers + classes for dropdowns
+    Promise.all([
+      db.query("SELECT id, name FROM manufacturers ORDER BY name"),
+      db.query("SELECT id, name FROM classes ORDER BY name"),
+    ])
+      .then(([mRes, cRes]) => {
+        res.render("cars/form", {
+          car: {},
+          manufacturers: mRes.rows,
+          classes: cRes.rows,
+          action: "/cars",
+        });
+      })
+      .catch(next);
+  },
 
-exports.create = async (req, res) => {
-  try {
+  async create(req, res, next) {
     const {
-      name,
-      description,
-      top_speed,
-      acceleration,
+      model,
       manufacturer_id,
       class_id,
       price,
+      image_url,
+      engine_power,
+      weight,
+      doors,
+      drive_type,
       lap_time,
-      seats,
-      drivetrain,
-    } = req.body;
-    await pool.query(
-      "INSERT INTO cars (name, description, top_speed, acceleration, manufacturer_id, class_id, price, lap_time, seats, drivetrain) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
-      [
-        name,
-        description,
-        top_speed,
-        acceleration,
-        manufacturer_id,
-        class_id,
-        price,
-        lap_time,
-        seats,
-        drivetrain,
-      ]
-    );
-    res.redirect("/cars");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
-};
-
-exports.edit = async (req, res) => {
-  try {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) {
-      return res.status(400).send("Invalid car ID");
-    }
-    const [carResult, manufacturersResult, classesResult] = await Promise.all([
-      pool.query("SELECT * FROM cars WHERE id = $1", [id]),
-      pool.query("SELECT * FROM manufacturers"),
-      pool.query("SELECT * FROM classes"),
-    ]);
-    const car = carResult.rows[0];
-    if (!car) return res.status(404).send("Car not found");
-    res.render("cars/edit", {
-      car,
-      manufacturers: manufacturersResult.rows,
-      classes: classesResult.rows,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
-};
-
-exports.update = async (req, res) => {
-  try {
-    const {
-      name,
-      description,
       top_speed,
-      acceleration,
-      manufacturer_id,
-      class_id,
-      price,
-      lap_time,
-      seats,
-      drivetrain,
+      drag_coefficient,
+      brake_force,
     } = req.body;
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) {
-      return res.status(400).send("Invalid car ID");
+    try {
+      await db.query(
+        `INSERT INTO cars
+         (model, manufacturer_id, class_id, price, image_url,
+          engine_power, weight, doors, drive_type, lap_time,
+          top_speed, drag_coefficient, brake_force)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
+        [
+          model,
+          manufacturer_id,
+          class_id,
+          price,
+          image_url,
+          engine_power,
+          weight,
+          doors,
+          drive_type,
+          lap_time,
+          top_speed,
+          drag_coefficient,
+          brake_force,
+        ]
+      );
+      res.redirect("/cars"); // or to cars list
+    } catch (err) {
+      next(err);
     }
-    await pool.query(
-      "UPDATE cars SET name = $1, description = $2, top_speed = $3, acceleration = $4, manufacturer_id = $5, class_id = $6, price = $7, lap_time = $8, seats = $9, drivetrain = $10 WHERE id = $11",
-      [
-        name,
-        description,
-        top_speed,
-        acceleration,
-        manufacturer_id,
-        class_id,
-        price,
-        lap_time,
-        seats,
-        drivetrain,
+  },
+
+  // JSON for popup
+  async showJSON(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { rows } = await db.query(
+        `SELECT cars.*, manufacturers.name AS man_name, classes.name AS class_name, manufacturers.country AS country
+         FROM cars
+         JOIN manufacturers ON cars.manufacturer_id=manufacturers.id
+         JOIN classes       ON cars.class_id=classes.id
+         WHERE cars.id=$1`,
+        [id]
+      );
+      if (!rows.length) return res.status(404).json({ error: "Not found" });
+
+      rows[0].country = countryCodeMap[rows[0].country] || "xx";
+
+      res.json(rows[0]);
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async editForm(req, res, next) {
+    try {
+      const { id } = req.params;
+
+      // Get the car details
+      const carResult = await db.query("SELECT * FROM cars WHERE id = $1", [
         id,
-      ]
-    );
-    res.redirect("/cars");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
-};
+      ]);
+      if (carResult.rows.length === 0) {
+        return res.status(404).send("Car not found");
+      }
+      const car = carResult.rows[0];
 
-exports.delete = async (req, res) => {
-  try {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) {
-      return res.status(400).send("Invalid car ID");
+      // Get class and manufacturer options for the dropdowns
+      const classes = (await db.query("SELECT * FROM classes")).rows;
+      const manufacturers = (await db.query("SELECT * FROM manufacturers"))
+        .rows;
+
+      res.render("cars/form", {
+        car,
+        classes,
+        manufacturers,
+        formAction: `/cars/${id}?_method=PUT`,
+        method: "PUT",
+        buttonLabel: "Update Car",
+      });
+    } catch (err) {
+      console.error("Error loading edit car form:", err);
+      res.status(500).send("Internal Server Error");
     }
-    await pool.query("DELETE FROM cars WHERE id = $1", [id]);
-    res.redirect("/cars");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
+  },
+
+  async update(req, res, next) {
+    try {
+      const { id } = req.params;
+      const {
+        model,
+        manufacturer_id,
+        class_id,
+        price,
+        image_url,
+        engine_power,
+        weight,
+        doors,
+        drive_type,
+        lap_time,
+        top_speed,
+        drag_coefficient,
+        brake_force,
+      } = req.body;
+
+      await db.query(
+        `
+        UPDATE cars SET
+          model = $1,
+          manufacturer_id = $2,
+          class_id = $3,
+          price = $4,
+          image_url = $5,
+          engine_power = $6,
+          weight = $7,
+          doors = $8,
+          drive_type = $9,
+          lap_time = $10,
+          top_speed = $11,
+          drag_coefficient = $12,
+          brake_force = $13
+        WHERE id = $14
+      `,
+        [
+          model,
+          manufacturer_id,
+          class_id,
+          price,
+          image_url,
+          engine_power,
+          weight,
+          doors,
+          drive_type,
+          lap_time,
+          top_speed,
+          drag_coefficient,
+          brake_force,
+          id,
+        ]
+      );
+
+      res.redirect("/cars");
+    } catch (err) {
+      console.error("Error updating car:", err);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+
+  async remove(req, res, next) {
+    try {
+      const { id } = req.params;
+      await db.query("DELETE FROM cars WHERE id=$1", [id]);
+      res.redirect("/cars");
+    } catch (err) {
+      next(err);
+    }
+  },
 };

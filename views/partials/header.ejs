@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GTA Used Car Inventory</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/manufacturers">Manufacturers</a>
+      <a href="/classes">Classes</a>
+      <a href="/cars">All Cars</a>
+    </nav>
+    <main></main>
+  </body>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(`carModal-${id}`).classList.remove("hidden");
+    }
+
+    function closeModal(id) {
+      document.getElementById(`carModal-${id}`).classList.add("hidden");
+    }
+
+    function openManufacturersModal() {
+      document.getElementById("manufacturersModal").classList.remove("hidden");
+    }
+
+    function closeManufacturersModal() {
+      document.getElementById("manufacturersModal").classList.add("hidden");
+    }
+
+    function openEditForm(id) {
+      document.getElementById(`editForm-${id}`).classList.toggle("hidden");
+    }
+
+    function showCarPopup(id) {
+      fetch(`/cars/${id}`)
+        .then((res) => res.json())
+        .then((car) => {
+          document.getElementById("popupContent").innerHTML = `
+        <img src="${car.image_url}" style="width:100%;" />
+        <img src="https://flagcdn.com/24x18/${car.country}.png" />
+        <h4>${car.man_name}</h4>
+        <h4>${car.class_name}</h4>
+        <h2>${car.model}</h2>
+        <p>Price: $${car.price}</p>
+        <p>Class: ${car.class_name}</p>
+        <p>Engine Power: ${car.engine_power} HP</p>
+        <p>Weight: ${car.weight} kg</p>
+        <p>Doors: ${car.doors}</p>
+        <p>Drive Type: ${car.drive_type}</p>
+        <p>Top Speed: ${car.top_speed} km/h</p>
+        <p>Lap Time: ${car.lap_time} s</p>
+        <p>Drag Coefficient: ${car.drag_coefficient}</p>
+        <p>Brake Force: ${car.brake_force}</p>
+
+        <div class="car-popup-bottom">
+        <button class="light" onclick="closeCarPopup()">Close</button>
+        <button onclick="openEditCarModal(${car.id})">Edit Car</button>
+        <form
+            action="/cars/${car.id}?_method=DELETE"
+            method="POST"
+            onsubmit="return confirm('Are you sure you want to delete this car?')"
+        >
+            <button type="submit" class="delete">Remove from List</button>
+        </form>
+        </div>
+      `;
+          document.getElementById("carPopup").style.display = "flex";
+        });
+    }
+
+    function closeCarPopup() {
+      document.getElementById("carPopup").style.display = "none";
+    }
+
+    // Optional: preload edit modal function here if you want inline editing
+    function openEditCarModal(id) {
+      fetch(`/cars/${id}/edit`)
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("popupContent").innerHTML = html;
+        });
+    }
+
+    function openCarModal() {
+      document.getElementById("carModal").classList.remove("hidden");
+    }
+    function closeCarModal() {
+      document.getElementById("carModal").classList.add("hidden");
+    }
+
+    function openEditManufacturerModal() {
+      document.getElementById("editManufacturerModal").style.display = "block";
+    }
+
+    function closeEditManufacturerModal() {
+      document.getElementById("editManufacturerModal").style.display = "none";
+    }
+
+    function openEditClassModal() {
+      document.getElementById("editClassModal").style.display = "block";
+    }
+
+    function closeEditClassModal() {
+      document.getElementById("editClassModal").style.display = "none";
+    }
+  </script>
+</html>

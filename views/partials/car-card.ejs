@@ -1,0 +1,13 @@
+<div
+  class="card"
+  onclick="showCarPopup( <%= car.id %> )"
+  style="cursor: pointer"
+>
+  <img src="<%= car.image_url %>" style="width: 200px" />
+  <img src="https://flagcdn.com/24x18/<%= car.country %>.png" />
+  <h4><%= car.manufacturer_name %></h4>
+  <h3><%= car.model %></h3>
+  <p>$<%= car.price %></p>
+  <p>Class: <%= car.class_name %></p>
+  <p><%= car.drive_type %></p>
+</div>

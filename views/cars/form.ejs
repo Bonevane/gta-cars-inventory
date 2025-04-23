@@ -1,0 +1,95 @@
+<h2>Edit Car</h2>
+<form action="/cars/<%= car.id %>?_method=PUT" method="POST">
+  <label
+    >Model:
+    <input type="text" name="model" value="<%= car.model %>" required /> </label
+  ><br />
+  <label
+    >Price:
+    <input
+      type="number"
+      name="price"
+      value="<%= car.price %>"
+      required
+    /> </label
+  ><br />
+  <label
+    >Image URL:
+    <input type="text" name="image_url" value="<%= car.image_url %>" /> </label
+  ><br />
+  <label
+    >Engine Power:
+    <input
+      type="number"
+      name="engine_power"
+      value="<%= car.engine_power %>"
+    /> </label
+  ><br />
+  <label
+    >Weight:
+    <input type="number" name="weight" value="<%= car.weight %>" /> </label
+  ><br />
+  <label
+    >Doors:
+    <input type="number" name="doors" value="<%= car.doors %>" /> </label
+  ><br />
+  <label
+    >Drive Type:
+    <input
+      type="text"
+      name="drive_type"
+      value="<%= car.drive_type %>"
+    /> </label
+  ><br />
+  <label
+    >Top Speed:
+    <input
+      type="number"
+      name="top_speed"
+      value="<%= car.top_speed %>"
+    /> </label
+  ><br />
+  <label
+    >Lap Time:
+    <input
+      type="number"
+      step="0.01"
+      name="lap_time"
+      value="<%= car.lap_time %>"
+    /> </label
+  ><br />
+  <label
+    >Drag Coefficient:
+    <input
+      type="number"
+      step="0.01"
+      name="drag_coefficient"
+      value="<%= car.drag_coefficient %>"
+    /> </label
+  ><br />
+  <label
+    >Brake Force:
+    <input
+      type="number"
+      name="brake_force"
+      value="<%= car.brake_force %>"
+    /> </label
+  ><br />
+  <label>Manufacturer:
+    <select name="manufacturer_id">
+      <% manufacturers.forEach(m => { %>
+        <option value="<%= m.id %>" <%= car?.manufacturer_id === m.id ? 'selected' : '' %>><%= m.name %></option>
+      <% }) %>
+    </select>
+  </label><br>
+
+  <label>Class:
+    <select name="class_id">
+      <% classes.forEach(c => { %>
+        <option value="<%= c.id %>" <%= car?.class_id === c.id ? 'selected' : '' %>><%= c.name %></option>
+      <% }) %>
+    </select>
+  </label><br>
+
+  <button type="submit">Save</button>
+</form>

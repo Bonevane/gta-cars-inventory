@@ -1,7 +1,20 @@
-<h1>Create New Manufacturer</h1>
-<form method="POST" action="/manufacturers">
-  <label for="name">Name:</label>
-  <input type="text" name="name" id="name" required />
-  <button type="submit">Create</button>
+<%- include('../partials/header') %>
+<h1><%= manufacturer ? "Edit" : "New" %> Manufacturer</h1>
+<form
+  method="POST"
+  action="<%= manufacturer ? '/manufacturers/' + manufacturer.id + '?_method=PUT' : '/manufacturers' %>"
+>
+  <label
+    >Name: <input name="name" value="<%= manufacturer?.name || '' %>" /></label
+  ><br />
+  <label
+    >Country:
+    <input name="country" value="<%= manufacturer?.country || '' %>" /></label
+  ><br />
+  <label
+    >Logo URL:
+    <input name="logo_url" value="<%= manufacturer?.logo_url || '' %>" /></label
+  ><br />
+  <button>Submit</button>
 </form>
-<a href="/manufacturers">Cancel</a>
+<%- include('../partials/footer') %>

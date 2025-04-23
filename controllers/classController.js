@@ -1,90 +1,93 @@
-const pool = require("../db/pool");
+// controllers/classesController.js
+const db = require("../db/pool");
 
-exports.list = async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM classes");
-    res.render("classes/list", { classes: result.rows });
-  } catch (err) {
-    console.error(err);
-    res.send("Error");
-  }
-};
-
-exports.show = async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM classes WHERE id = $1", [
-      req.params.id,
-    ]);
-    const carClass = result.rows[0];
-    if (!carClass) return res.send("Class not found");
-    res.render("classes/show", { carClass });
-  } catch (err) {
-    console.error(err);
-    res.send("Error");
-  }
-};
-
-exports.new = async (req, res) => {
-  res.render("classes/new");
-};
-
-exports.create = async (req, res) => {
-  try {
-    const { name } = req.body;
-    await pool.query("INSERT INTO classes (name) VALUES ($1)", [name]);
-    res.redirect("/classes");
-  } catch (err) {
-    console.error(err);
-    res.send("Error");
-  }
-};
-
-exports.edit = async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM classes WHERE id = $1", [
-      req.params.id,
-    ]);
-    const carClass = result.rows[0];
-    if (!carClass) return res.send("Class not found");
-    res.render("classes/edit", { carClass });
-  } catch (err) {
-    console.error(err);
-    res.send("Error");
-  }
-};
-
-exports.update = async (req, res) => {
-  try {
-    const { name } = req.body;
-    await pool.query("UPDATE classes SET name = $1 WHERE id = $2", [
-      name,
-      req.params.id,
-    ]);
-    res.redirect("/classes");
-  } catch (err) {
-    console.error(err);
-    res.send("Error");
-  }
-};
-
-exports.delete = async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM classes WHERE id = $1", [
-      req.params.id,
-    ]);
-    if (result.rows.length === 0) {
-      return res.send("Class not found");
+module.exports = {
+  async list(req, res, next) {
+    try {
+      const { rows } = await db.query("SELECT * FROM classes ORDER BY name");
+      res.render("classes/index", { classes: rows });
+    } catch (err) {
+      next(err);
     }
-    await pool.query("DELETE FROM classes WHERE id = $1", [req.params.id]);
-    res.redirect("/classes");
-  } catch (err) {
-    if (err.code === "23503") {
-      res.send(
-        "Cannot delete class because there are cars associated with it."
+  },
+
+  newForm(req, res) {
+    res.render("classes/form", { cls: {}, action: "/" });
+  },
+
+  async create(req, res, next) {
+    const { name, description } = req.body;
+    try {
+      await db.query("INSERT INTO classes (name, description) VALUES ($1,$2)", [
+        name,
+        description,
+      ]);
+      res.redirect("/classes");
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async show(req, res, next) {
+    try {
+      const { id } = req.params;
+      const classRes = await db.query("SELECT * FROM classes WHERE id=$1", [
+        id,
+      ]);
+      const carsRes = await db.query(
+        "SELECT * FROM cars WHERE class_id=$1 ORDER BY model",
+        [id]
       );
-    } else {
-      console.error(err);
-      res.send("Error");
+
+      
+      if (!classRes.rows.length) return res.status(404).send("Not found");
+      res.render("classes/show", {
+        carClass: classRes.rows[0],
+        cars: carsRes.rows,
+      });
+    } catch (err) {
+      next(err);
     }
-  }
+  },
+
+  async editForm(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { rows } = await db.query("SELECT * FROM classes WHERE id=$1", [
+        id,
+      ]);
+      if (!rows.length) return res.status(404).send("Not found");
+      res.render("classes/form", {
+        cls: rows[0],
+        action: `/classes/${id}?_method=PUT`,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async update(req, res, next) {
+    const { id } = req.params;
+    const { name, description } = req.body;
+    try {
+      await db.query("UPDATE classes SET name=$1, description=$2 WHERE id=$3", [
+        name,
+        description,
+        id,
+      ]);
+      res.redirect(`/classes/${id}`);
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async remove(req, res, next) {
+    try {
+      const { id } = req.params;
+      await db.query("DELETE FROM classes WHERE id=$1", [id]);
+      res.redirect("/classes");
+    } catch (err) {
+      res.status(400).send("Cannot delete: linked cars exist.");
+    }
+  },
 };

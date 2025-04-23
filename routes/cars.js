@@ -1,13 +1,14 @@
+// routes/cars.js
 const express = require("express");
 const router = express.Router();
-const carController = require("../controllers/carController");
+const ctl = require("../controllers/carController");
 
-router.get("/", carController.list);
-router.get("/new", carController.new);
-router.post("/", carController.create);
-router.get("/:id", carController.show);
-router.get("/:id/edit", carController.edit);
-router.put("/:id", carController.update);
-router.delete("/:id", carController.delete);
+router.get("/", ctl.list);
+router.get("/new", ctl.newForm);
+router.post("/", ctl.create);
+router.get("/:id", ctl.showJSON); // returns JSON for popup
+router.get("/:id/edit", ctl.editForm);
+router.put("/:id", ctl.update);
+router.delete("/:id", ctl.remove);
 
 module.exports = router;

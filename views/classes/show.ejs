@@ -1,6 +1,58 @@
+<%- include('../partials/header') %>
 <h1><%= carClass.name %></h1>
-<a href="/classes/<%= carClass.id %>/edit">Edit</a>
+<p><%= carClass.description %></p>
+
+<!-- Edit Button -->
+<button onclick="openEditClassModal()">Edit Class</button>
+
 <form method="POST" action="/classes/<%= carClass.id %>?_method=DELETE">
-  <button type="submit">Delete</button>
+  <button>Delete</button>
 </form>
-<a href="/classes">Back to Classes</a>
+
+<h3>Cars in this Class</h3>
+<div class="grid">
+  <% cars.forEach(car => { %> <%- include('../partials/car-card', { car: car
+  })%> <% }) %>
+</div>
+<%- include('../partials/footer') %>
+
+<!-- Car Popup container -->
+<%- include('../partials/car-popup') %>
+
+<!-- Modal -->
+<div
+  id="editClassModal"
+  style="
+    display: none;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 1rem;
+    border: 1px solid #ccc;
+  "
+>
+  <h2>Edit Class</h2>
+  <form action="/classes/<%= carClass.id %>?_method=PUT" method="POST">
+    <label
+      >Name:
+      <input
+        type="text"
+        name="name"
+        value="<%= carClass.name %>"
+        required
+      /> </label
+    ><br />
+    <label
+      >Description:
+      <input
+        type="text"
+        name="description"
+        value="<%= carClass.description %>"
+      /> </label
+    ><br />
+    <button type="submit">Save Changes</button>
+    <button type="button" onclick="closeEditClassModal()">Cancel</button>
+  </form>
+</div>

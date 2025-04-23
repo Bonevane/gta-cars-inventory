@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+
+<h1>Classes</h1>
+<button onclick="openClassModal()">+ Add Class</button>
+
+<ul>
+  <% classes.forEach(cls => { %>
+  <li><a href="/classes/<%= cls.id %>"><%= cls.name %></a></li>
+  <% }) %>
+</ul>
+
+<!-- Class Modal -->
+<div id="classModal" class="modal hidden">
+  <div class="modal-content">
+    <span onclick="closeClassModal()" class="close">&times;</span>
+    <h2>Add Class</h2>
+    <form method="POST" action="/classes">
+      <label
+        >Name (e.g. A, B, S): <input type="text" name="name" required /> </label
+      ><br />
+      <label>Description: <textarea name="description"></textarea></label><br />
+      <button type="submit">Add</button>
+    </form>
+  </div>
+</div>
+
+
+<script>
+  function openClassModal() {
+    document.getElementById("classModal").classList.remove("hidden");
+  }
+  function closeClassModal() {
+    document.getElementById("classModal").classList.add("hidden");
+  }
+</script>
+
+<%- include('../partials/footer') %>

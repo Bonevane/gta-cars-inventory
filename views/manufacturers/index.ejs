@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+
+<h1>Manufacturers</h1>
+<button onclick="openManufacturersModal()">+ Add Manufacturer</button>
+
+<ul>
+  <% manufacturers.forEach(m => { %>
+  <li>
+    <img src="<%= m.logo_url %>" width="300" />
+    <a href="/manufacturers/<%= m.id %>"><%= m.name %></a>
+  </li>
+  <% }) %>
+</ul>
+
+<!-- Modal HTML -->
+<div id="manufacturersModal" class="modal hidden">
+  <div class="modal-content">
+    <span onclick="closeManufacturersModal()" class="close">&times;</span>
+    <h2>Add Manufacturer</h2>
+    <form method="POST" action="/manufacturers">
+      <label>Name: <input type="text" name="name" required /> </label><br />
+      <label>Country: <input type="text" name="country" /> </label><br />
+      <label>Logo URL: <input type="text" name="logo_url" /> </label><br />
+      <button type="submit">Add</button>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
