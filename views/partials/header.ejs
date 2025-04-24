@@ -6,12 +6,37 @@
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/manufacturers">Manufacturers</a>
-      <a href="/classes">Classes</a>
-      <a href="/cars">All Cars</a>
+    <nav class="gt-header">
+      <div class="nav-left">
+        <span class="logo"><a href="/" class="logo">🏁 AutoList</a></span>
+        <!-- <a href="/">Home</a> -->
+        <a href="/manufacturers">Manufacturers</a>
+        <a href="/classes">Classes</a>
+        <a href="/cars">All Cars</a>
+      </div>
+
+      <div class="nav-center">
+        <!-- <span class="credits">💰 140,000</span> -->
+        <div class="game">
+          <img
+            src="https://pngimg.com/d/gta_PNG2.png"
+            style="max-width: 32px"
+          />
+          <span>Grand Theft Auto V</span>
+        </div>
+        <span class="pp">PP 515.2</span>
+      </div>
+
+      <div class="nav-right">
+        <!-- <span class="stat">📈 Collector Lvl 14</span>
+        <span class="stat">🏃 12.4 mi</span> -->
+        <span class="time">
+          <text id="currentTime">21:20</text>
+          <text id="currentDate">27 Jan</text>
+        </span>
+      </div>
     </nav>
+
     <main></main>
   </body>
 
@@ -51,12 +76,12 @@
                 </div>
                 <h2>${car.model}</h2>
                 <p style="margin-bottom: 1rem;"><text class="car-class">${car.class_name}</text></p>
-                <div>
-                    <div style="text-align: justify;">
+                <div style="padding-right: 15rem">
+                    <div style="display: flex; justify-content: space-between;">
                         <text class="small-text">Lap Time:</text>
                         <text class="medium-text">${car.lap_time}</text>
                     </div>
-                    <div>
+                    <div style="display: flex; justify-content: space-between;">
                         <text class="small-text">Top Speed:</text>
                         <text class="medium-text">${car.top_speed}</text>
                     </div>
@@ -71,29 +96,39 @@
             </div>
             <div class="car-popup-mid">
             <div class="car-info">
-                <div>
-                <p>Weight:</p>
-                <p>${car.weight} kg</p>
+                <div class="car-info-left">
+                    <div>
+                    <text class="small-text">Weight:</text>
+                    <text class="medium-text">${car.weight} kg</text>
+                    </div>
+                    <div>
+                    <text class="small-text">Engine Power:</text>
+                    <text class="medium-text">${car.engine_power}</text>
+                    </div>
                 </div>
-                <div>
-                <p>Engine Power:</p>
-                <p>${car.engine_power}</p>
+                <div class="car-info-mid">
+                    <div>
+                    <text class="small-text">Seats:</text>
+                    <text class="medium-text">${car.doors}</text>
+                    </div>
+                    <div>
+                    <text class="small-text">Drivetrain:</text>
+                    <text class="medium-text">${car.drive_type}</text>
+                    </div>
+                    <div>
+                        <text class="small-text">Vehicle Type</text>
+                        <text class="medium-text">#Land</text>
+                    </div>
                 </div>
-                <div>
-                <p>Seats:</p>
-                <p>${car.doors}</p>
-                </div>
-                <div>
-                <p>Drivetrain:</p>
-                <p>${car.drive_type}</p>
-                </div>
-                <div>
-                <p>Drag:</p>
-                <p>${car.drag_coefficient}</p>
-                </div>
-                <div>
-                <p>brake_force:</p>
-                <p>${car.brake_force}</p>
+                <div class="car-info-right">
+                    <div>
+                    <text class="small-text">Drag:</text>
+                    <text class="medium-text">${car.drag_coefficient}</text>
+                    </div>
+                    <div>
+                    <text class="small-text">Brake Force:</text>
+                    <text class="medium-text">${car.brake_force}</text>
+                    </div>
                 </div>
             </div>
             </div>
@@ -148,5 +183,20 @@
     function closeEditClassModal() {
       document.getElementById("editClassModal").style.display = "none";
     }
+
+    function updateTime() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, "0");
+      const minutes = now.getMinutes().toString().padStart(2, "0");
+      document.getElementById(
+        "currentTime"
+      ).textContent = `${hours}:${minutes}`;
+      const options = { day: "numeric", month: "short" };
+      document.getElementById("currentDate").textContent =
+        now.toLocaleDateString("en-US", options);
+    }
+
+    setInterval(updateTime, 60000);
+    updateTime();
   </script>
 </html>
