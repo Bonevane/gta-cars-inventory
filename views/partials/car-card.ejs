@@ -1,13 +1,42 @@
 <div
-  class="card"
+  class="car-card"
   onclick="showCarPopup( <%= car.id %> )"
   style="cursor: pointer"
 >
-  <img src="<%= car.image_url %>" style="width: 200px" />
-  <img src="https://flagcdn.com/24x18/<%= car.country %>.png" />
-  <h4><%= car.manufacturer_name %></h4>
-  <h3><%= car.model %></h3>
-  <p>$<%= car.price %></p>
-  <p>Class: <%= car.class_name %></p>
-  <p><%= car.drive_type %></p>
+  <div class="car-card-img">
+    <img class="car-img" src="<%= car.image_url %>" style="width: 100%" />
+  </div>
+  <div class="car-card-right">
+    <div style="display: flex; gap: 0.5rem; flex-direction: column">
+      <div class="origin">
+        <img
+          style="width: auto; height: 12px"
+          src="https://flagcdn.com/24x18/<%= car.country
+        %>.png"
+        />
+        <p
+          style="
+            font-size: x-small;
+            font-weight: 600;
+            text-transform: uppercase;
+          "
+        >
+          <%= car.manufacturer_name %>
+        </p>
+      </div>
+      <h4><%= car.model %></h4>
+    </div>
+    <div class="class-drivetype">
+      <div style="display: flex; justify-content: space-between">
+        <text class="medium-text car-class"><%= car.class_name %></text>
+      </div>
+      <div style="display: flex; justify-content: space-between">
+        <text class="small-text"><%= car.drive_type %></text>
+      </div>
+    </div>
+    <div class="car-info-simple-bottom">
+      <text class="small-text">$</text>
+      <text class="large-text price"><%= car.price %></text>
+    </div>
+  </div>
 </div>

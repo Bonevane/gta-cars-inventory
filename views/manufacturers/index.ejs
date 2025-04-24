@@ -1,7 +1,9 @@
 <%- include('../partials/header') %>
 
-<h1>Manufacturers</h1>
-<button onclick="openManufacturersModal()">+ Add Manufacturer</button>
+<div class="all-cars-header">
+  <h2 style="text-transform: uppercase">Manufacturers</h2>
+  <button onclick="openManufacturersModal()">+ Add Manufacturer</button>
+</div>
 
 <ul>
   <% manufacturers.forEach(m => { %>

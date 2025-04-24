@@ -1,7 +1,9 @@
 <%- include('../partials/header') %>
 
-<h1>Classes</h1>
-<button onclick="openClassModal()">+ Add Class</button>
+<div class="all-cars-header">
+  <h2 style="text-transform: uppercase">Classes</h2>
+  <button onclick="openClassModal()">+ Add Class</button>
+</div>
 
 <ul>
   <% classes.forEach(cls => { %>
@@ -23,7 +25,6 @@
     </form>
   </div>
 </div>
-
 
 <script>
   function openClassModal() {

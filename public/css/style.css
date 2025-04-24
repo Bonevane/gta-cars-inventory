@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100..900&display=swap");
 
+@font-face {
+  font-family: "D-DIN Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: local("D-DIN Regular"), url("./fonts/D-DIN.woff") format("woff");
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,9 +22,14 @@ img {
   max-width: 600px;
 }
 
+.car-img {
+  object-fit: cover;
+  aspect-ratio: 20/13;
+}
+
 body {
-  font-family: Montserrat, Helvetica, sans-serif;
-  background-color: #ebebec;
+  font-family: Helvetica, sans-serif;
+  background-color: #e4e4e6;
   color: #262626;
   padding-top: 60px;
 }
@@ -37,7 +49,7 @@ body {
   justify-content: center;
 }
 .modal-content {
-  background-color: #dadedf;
+  background-color: #e4e4e6;
   border: 1px solid #aaa;
   padding: 1rem;
   width: auto;
@@ -60,7 +72,7 @@ button {
   font-family: Poppins, Helvetica, sans-serif;
   border-radius: 100px;
   border: none;
-  padding: 8px 80px;
+  padding: 10px 80px;
   font-weight: 600;
   text-align: center;
   background-color: #262626;
@@ -142,6 +154,7 @@ button.delete {
 .origin {
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 0.5rem;
   font-size: smaller;
 }
@@ -171,11 +184,21 @@ button.delete {
   font-weight: 600;
 }
 
+.large-text {
+  color: #262626;
+  font-size: large;
+  font-weight: 700;
+}
+
 .huge-text {
   font-family: sans-serif;
   color: #262626;
   font-size: xx-large;
   font-weight: 600;
+}
+
+.price {
+  letter-spacing: 0.5px;
 }
 
 .car-popup-mid {
@@ -291,4 +314,54 @@ button.delete {
   padding-right: 2rem;
   border-left: #aaaaaa50 1px solid;
   border-right: #aaaaaa50 1px solid;
+}
+
+.car-card {
+  background-color: #eeeef0;
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  border: transparent 2px solid;
+}
+
+.car-card:hover {
+  transform: scale(1.01);
+  border: rgba(0, 0, 0, 0.1) 2px solid;
+  background-color: #f0f0f4;
+}
+
+.car-card-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 200px;
+}
+
+.class-drivetype {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.grid {
+  display: grid;
+  grid-template-rows: repeat(3, auto); /* 3 rows, height adjusts to content */
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Flexible columns */
+  gap: 20px; /* Spacing between cards */
+  width: 100%; /* Ensure grid fills parent */
+}
+
+.grid-container {
+  padding: 1rem;
+}
+
+.all-cars-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
 }

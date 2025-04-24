@@ -1,11 +1,15 @@
 <%- include('../partials/header') %>
 
-<h1>All Cars</h1>
-<button onclick="openCarModal()">+ Add Car</button>
+<div class="all-cars-header">
+  <h2 style="text-transform: uppercase">All Cars</h2>
+  <button onclick="openCarModal()">+ Add Car</button>
+</div>
 
-<div class="grid">
-  <% cars.forEach(car => { %> <%- include('../partials/car-card', { car: car
-  })%> <% }) %>
+<div class="grid-container">
+  <div class="grid">
+    <% cars.forEach(car => { %> <%- include('../partials/car-card', { car: car
+    })%> <% }) %>
+  </div>
 </div>
 
 <!-- Car Popup container -->

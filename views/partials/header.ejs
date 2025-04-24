@@ -67,11 +67,11 @@
         .then((car) => {
           document.getElementById("popupContent").innerHTML = `
         <div class="car-popup-top">
-            <img src="${car.image_url}" style="width: 100%" />
+            <img class="car-img" src="${car.image_url}" style="width: 100%" />
             <div class="car-info-simple">
                 <div class="car-info-simple-top">
                 <div class="origin">
-                    <img src="https://flagcdn.com/24x18/${car.country}.png" />
+                    <img src="https://flagcdn.com/24x18/${car.country}.png"" />
                     <p style="font-weight:600; text-transform: uppercase;">${car.man_name}</p>
                 </div>
                 <h2>${car.model}</h2>
@@ -90,7 +90,7 @@
                 <div class="car-info-simple-bottom">
                     <text class="small-text">PRICE:</text>
                     <text class="medium-text">$</text>
-                    <text class="huge-text">${car.price}</text>
+                    <text class="huge-text price">${car.price}</text>
                 </div>
             </div>
             </div>
@@ -116,8 +116,8 @@
                     <text class="medium-text">${car.drive_type}</text>
                     </div>
                     <div>
-                        <text class="small-text">Vehicle Type</text>
-                        <text class="medium-text">#Land</text>
+                        <text class="small-text">Vehicle Type:</text>
+                        <text class="medium-text">Land</text>
                     </div>
                 </div>
                 <div class="car-info-right">
