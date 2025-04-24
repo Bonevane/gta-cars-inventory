@@ -41,22 +41,62 @@
         .then((res) => res.json())
         .then((car) => {
           document.getElementById("popupContent").innerHTML = `
-        <img src="${car.image_url}" style="width:100%;" />
-        <img src="https://flagcdn.com/24x18/${car.country}.png" />
-        <h4>${car.man_name}</h4>
-        <h4>${car.class_name}</h4>
-        <h2>${car.model}</h2>
-        <p>Price: $${car.price}</p>
-        <p>Class: ${car.class_name}</p>
-        <p>Engine Power: ${car.engine_power} HP</p>
-        <p>Weight: ${car.weight} kg</p>
-        <p>Doors: ${car.doors}</p>
-        <p>Drive Type: ${car.drive_type}</p>
-        <p>Top Speed: ${car.top_speed} km/h</p>
-        <p>Lap Time: ${car.lap_time} s</p>
-        <p>Drag Coefficient: ${car.drag_coefficient}</p>
-        <p>Brake Force: ${car.brake_force}</p>
-
+        <div class="car-popup-top">
+            <img src="${car.image_url}" style="width: 100%" />
+            <div class="car-info-simple">
+                <div class="car-info-simple-top">
+                <div class="origin">
+                    <img src="https://flagcdn.com/24x18/${car.country}.png" />
+                    <p style="font-weight:600; text-transform: uppercase;">${car.man_name}</p>
+                </div>
+                <h2>${car.model}</h2>
+                <p style="margin-bottom: 1rem;"><text class="car-class">${car.class_name}</text></p>
+                <div>
+                    <div style="text-align: justify;">
+                        <text class="small-text">Lap Time:</text>
+                        <text class="medium-text">${car.lap_time}</text>
+                    </div>
+                    <div>
+                        <text class="small-text">Top Speed:</text>
+                        <text class="medium-text">${car.top_speed}</text>
+                    </div>
+                </div>
+                </div>
+                <div class="car-info-simple-bottom">
+                    <text class="small-text">PRICE:</text>
+                    <text class="medium-text">$</text>
+                    <text class="huge-text">${car.price}</text>
+                </div>
+            </div>
+            </div>
+            <div class="car-popup-mid">
+            <div class="car-info">
+                <div>
+                <p>Weight:</p>
+                <p>${car.weight} kg</p>
+                </div>
+                <div>
+                <p>Engine Power:</p>
+                <p>${car.engine_power}</p>
+                </div>
+                <div>
+                <p>Seats:</p>
+                <p>${car.doors}</p>
+                </div>
+                <div>
+                <p>Drivetrain:</p>
+                <p>${car.drive_type}</p>
+                </div>
+                <div>
+                <p>Drag:</p>
+                <p>${car.drag_coefficient}</p>
+                </div>
+                <div>
+                <p>brake_force:</p>
+                <p>${car.brake_force}</p>
+                </div>
+            </div>
+            </div>
         <div class="car-popup-bottom">
         <button class="light" onclick="closeCarPopup()">Close</button>
         <button onclick="openEditCarModal(${car.id})">Edit Car</button>
