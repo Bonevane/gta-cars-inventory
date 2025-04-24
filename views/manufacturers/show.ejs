@@ -1,28 +1,31 @@
 <%- include('../partials/header') %>
-<h2><%= manufacturer.name %></h2>
-<img src="https://flagcdn.com/24x18/<%= manufacturer.country %>.png" />
-<p><%= manufacturer.country %></p>
-<img src="<%= manufacturer.logo_url %>" alt="Logo" width="100" />
 
-<!-- Edit Button -->
-<button onclick="openEditManufacturerModal()">Edit Manufacturer</button>
-
-<!-- Delete Form (optional) -->
-<form
-  action="/manufacturers/<%= manufacturer.id %>?_method=DELETE"
-  method="POST"
-  style="display: inline"
->
-  <button type="submit" onclick="return confirm('Are you sure?')">
-    Delete
-  </button>
-</form>
-
-<h3>Cars from this Manufacturer</h3>
-<div class="grid">
-  <% cars.forEach(car => { %> <%- include('../partials/car-card', { car: car })
-  %> <% }) %>
+<div class="all-cars-header">
+  <div style="display: flex; gap: 1rem; align-items: center">
+    <img src="<%= manufacturer.logo_url %>" alt="Logo" height="64px" />
+    <h2><%= manufacturer.name %></h2>
+  </div>
+  <div style="display: flex; gap: 1rem">
+    <button class="light" onclick="openEditManufacturerModal()">Edit</button>
+    <form
+      action="/manufacturers/<%= manufacturer.id %>?_method=DELETE"
+      method="POST"
+      style="display: inline"
+    >
+      <button type="submit" onclick="return confirm('Are you sure?')">
+        Delete
+      </button>
+    </form>
+  </div>
 </div>
+
+<div class="grid-container">
+  <div class="grid">
+    <% cars.forEach(car => { %> <%- include('../partials/car-card', { car: car
+    }) %> <% }) %>
+  </div>
+</div>
+
 <%- include('../partials/footer') %>
 
 <!-- Car Popup container -->

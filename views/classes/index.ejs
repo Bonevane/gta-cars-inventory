@@ -5,11 +5,13 @@
   <button onclick="openClassModal()">+ Add Class</button>
 </div>
 
-<ul>
+<div>
   <% classes.forEach(cls => { %>
-  <li><a href="/classes/<%= cls.id %>"><%= cls.name %></a></li>
+  <button class="glass-btn">
+    <a href="/classes/<%= cls.id %>"><%= cls.name %></a>
+  </button>
   <% }) %>
-</ul>
+</div>
 
 <!-- Class Modal -->
 <div id="classModal" class="modal hidden">

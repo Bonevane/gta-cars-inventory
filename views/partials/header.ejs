@@ -144,12 +144,14 @@
         </form>
         </div>
       `;
+          document.getElementById("carPopup").classList.remove("hidden");
           document.getElementById("carPopup").style.display = "flex";
         });
     }
 
     function closeCarPopup() {
       document.getElementById("carPopup").style.display = "none";
+      document.getElementById("carPopup").classList.add("hidden");
     }
 
     // Optional: preload edit modal function here if you want inline editing
