@@ -21,6 +21,20 @@ app.use(express.static("public"));
 app.use("/manufacturers", manufacturersRoutes);
 app.use("/classes", classesRoutes);
 app.use("/cars", carsRoutes);
+app.use((err, req, res, next) => {
+  console.error("Error occurred:", err); // Log the error to the console
+
+  const statusCode = err.status || 500; // Default to 500 if no status is provided
+  const errorMessage = err.message || "Internal Server Error"; // Default message
+
+  // Render error.ejs with the error message and status code
+  res.status(statusCode).render("partials/error", {
+    error: {
+      message: errorMessage,
+      status: statusCode,
+    },
+  });
+});
 
 // Home redirect
 app.get("/", (req, res) => res.redirect("/manufacturers"));

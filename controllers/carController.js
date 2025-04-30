@@ -1,4 +1,3 @@
-// controllers/carsController.js
 const db = require("../db/pool");
 
 const countryCodeMap = {
@@ -44,7 +43,9 @@ module.exports = {
       });
     } catch (err) {
       console.error(err);
-      res.status(500).send("Error loading cars");
+      const error = new Error("Error loading cars");
+      error.status = 500;
+      next(error);
     }
   },
 
@@ -159,8 +160,9 @@ module.exports = {
         buttonLabel: "Update Car",
       });
     } catch (err) {
-      console.error("Error loading edit car form:", err);
-      res.status(500).send("Internal Server Error");
+      const error = new Error("Error loading form");
+      error.status = 500;
+      next(error);
     }
   },
 
@@ -221,8 +223,9 @@ module.exports = {
 
       res.redirect("/cars");
     } catch (err) {
-      console.error("Error updating car:", err);
-      res.status(500).send("Internal Server Error");
+      const error = new Error("Error updating car");
+      error.status = 500;
+      next(error);
     }
   },
 

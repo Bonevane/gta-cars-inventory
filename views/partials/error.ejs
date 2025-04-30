@@ -1,0 +1,69 @@
+<%- include('../partials/header') %>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .error-container {
+    text-align: center;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .error-container h1 {
+    color: #e74c3c;
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+
+  .error-container p {
+    color: #333;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+
+  .error-container .error-message {
+    background-color: #f9d5d5;
+    padding: 10px;
+    border-radius: 5px;
+    color: #e74c3c;
+    font-size: 1.1em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .error-container .back-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 30px;
+  }
+
+  .error-container .back-btn:hover {
+    background-color: #2980b9;
+  }
+</style>
+<div class="error-container">
+  <h1>Oops!</h1>
+  <p>Something went wrong. We couldn't process your request.</p>
+
+  <% if (error) { %>
+  <div class="error-message"><strong>Error:</strong> <%= error.message %></div>
+  <% } %>
+
+  <a href="/"><button>Return to Home</button></a>
+</div>

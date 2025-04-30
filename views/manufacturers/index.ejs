@@ -1,21 +1,22 @@
 <%- include('../partials/header') %>
 
-<div class="all-cars-header">
-  <h2 style="text-transform: uppercase">Manufacturers</h2>
-  <button onclick="openManufacturersModal()">+ Add Manufacturer</button>
+<div id="bg-image" class="bg-image"></div>
+<div class="classes-container">
+  <h2 class="class-header">Manufacturers</h2>
+  <div class="class-buttons">
+    <% manufacturers.forEach(m => { %>
+    <a href="/manufacturers/<%= m.id %>">
+      <button class="glass"><%= m.name %></button>
+    </a>
+    <% }) %>
+  </div>
+  <button class="glass" onclick="openManufacturersModal()">
+    + Add Manufacturer
+  </button>
 </div>
 
-<ul>
-  <% manufacturers.forEach(m => { %>
-  <li>
-    <img src="<%= m.logo_url %>" width="300" />
-    <a href="/manufacturers/<%= m.id %>"><%= m.name %></a>
-  </li>
-  <% }) %>
-</ul>
-
 <!-- Modal HTML -->
-<div id="manufacturersModal" class="modal hidden">
+<div id="manufacturersModal" class="modal-overlay">
   <div class="modal-content">
     <span onclick="closeManufacturersModal()" class="close">&times;</span>
     <h2>Add Manufacturer</h2>

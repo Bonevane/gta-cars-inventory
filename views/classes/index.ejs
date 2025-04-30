@@ -1,20 +1,20 @@
 <%- include('../partials/header') %>
 
-<div class="all-cars-header">
-  <h2 style="text-transform: uppercase">Classes</h2>
-  <button onclick="openClassModal()">+ Add Class</button>
-</div>
-
-<div>
-  <% classes.forEach(cls => { %>
-  <button class="glass-btn">
-    <a href="/classes/<%= cls.id %>"><%= cls.name %></a>
-  </button>
-  <% }) %>
+<div id="bg-image" class="bg-image"></div>
+<div class="classes-container">
+  <h2 class="class-header">Classes</h2>
+  <div class="class-buttons">
+    <% classes.forEach(cls => { %>
+    <a href="/classes/<%= cls.id %>">
+      <button class="glass"><%= cls.name %></button>
+    </a>
+    <% }) %>
+  </div>
+  <button class="glass" onclick="openClassModal()">+ Add Class</button>
 </div>
 
 <!-- Class Modal -->
-<div id="classModal" class="modal hidden">
+<div id="classModal" class="modal-overlay">
   <div class="modal-content">
     <span onclick="closeClassModal()" class="close">&times;</span>
     <h2>Add Class</h2>
@@ -27,14 +27,5 @@
     </form>
   </div>
 </div>
-
-<script>
-  function openClassModal() {
-    document.getElementById("classModal").classList.remove("hidden");
-  }
-  function closeClassModal() {
-    document.getElementById("classModal").classList.add("hidden");
-  }
-</script>
 
 <%- include('../partials/footer') %>

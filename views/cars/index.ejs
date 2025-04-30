@@ -2,7 +2,7 @@
 
 <div class="all-cars-header">
   <h2 style="text-transform: uppercase">All Cars</h2>
-  <button onclick="openCarModal()">+ Add Car</button>
+  <button class="light" onclick="openCarModal()">+ Add Car</button>
 </div>
 
 <div class="grid-container">
@@ -16,7 +16,7 @@
 <%- include('../partials/car-popup') %>
 
 <!-- Car Modal -->
-<div id="carModal" class="modal hidden">
+<div id="carModal" class="modal-overlay">
   <div class="modal-content">
     <span onclick="closeCarModal()" class="close">&times;</span>
     <h2>Add Car</h2>

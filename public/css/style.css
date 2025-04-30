@@ -13,6 +13,11 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 nav {
   position: relative;
   z-index: 1000;
@@ -39,9 +44,24 @@ body {
   padding-top: 60px;
 }
 
+.bg-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("/images/gta_view.jpg") no-repeat center center fixed;
+  background-size: cover;
+  /* filter: blur(1px); */
+  z-index: -1; /* Important: places it behind everything */
+  pointer-events: none;
+}
+
 .modal.hidden {
   display: none;
 }
+
 .modal {
   position: fixed;
   top: 0;
@@ -115,6 +135,16 @@ button.light:hover {
   border: #d1d1d1 2px solid;
 }
 
+button.glass {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #f7f7f7;
+  border: 1px solid #f7f7f7;
+  font-size: medium;
+  backdrop-filter: blur(10px);
+  opacity: 0.95;
+  text-transform: uppercase;
+}
+
 button.delete {
   background-color: transparent;
   color: #262626;
@@ -124,7 +154,7 @@ button.delete {
 }
 
 .modal-overlay {
-  display: none;
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
@@ -136,18 +166,31 @@ button.delete {
   align-items: center;
   z-index: 900; /* on top of everything */
   backdrop-filter: blur(2px); /* optional, makes it even smoother */
-  animation: swoopIn 0.25s forwards;
+  /* animation: swoopIn 0.25s forwards; */
+
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
 }
 
-@keyframes swoopIn {
+/* @keyframes swoopIn {
   from {
-    transform: scale(0.98); /* Start at bottom */
+    transform: scale(0.98);
     opacity: 0;
   }
   to {
-    transform: scale(1); /* End at center */
+    transform: scale(1);
     opacity: 1;
   }
+} */
+
+.modal-overlay.visible {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
 }
 
 #popupContent {
@@ -324,7 +367,7 @@ button.delete {
 }
 
 .gt-header .time #currentTime {
-  font-family: Roboto;
+  font-family: Roboto, Helvetica;
   font-size: large;
   color: #b9bfc2;
   font-weight: bold;
@@ -397,4 +440,30 @@ button.delete {
   align-items: center;
   padding: 1rem;
   padding-left: 1.5rem;
+}
+
+.classes-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30vh;
+  gap: 4rem;
+}
+
+.class-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.class-header {
+  text-transform: uppercase;
+  color: #fdfdf8;
+  font-weight: 500;
+  font-size: large;
+  text-shadow: #020202 1px 1px 4px;
+  letter-spacing: 6px;
 }

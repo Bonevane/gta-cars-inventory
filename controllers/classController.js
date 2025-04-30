@@ -1,4 +1,3 @@
-// controllers/classesController.js
 const db = require("../db/pool");
 
 module.exports = {
@@ -39,7 +38,6 @@ module.exports = {
         [id]
       );
 
-      
       if (!classRes.rows.length) return res.status(404).send("Not found");
       res.render("classes/show", {
         carClass: classRes.rows[0],
@@ -87,7 +85,9 @@ module.exports = {
       await db.query("DELETE FROM classes WHERE id=$1", [id]);
       res.redirect("/classes");
     } catch (err) {
-      res.status(400).send("Cannot delete: linked cars exist.");
+      const error = new Error("Cannot delete class with cars");
+      error.status = 400;
+      next(error);
     }
   },
 };

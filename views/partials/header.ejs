@@ -24,7 +24,7 @@
           />
           <span>Grand Theft Auto V</span>
         </div>
-        <span class="pp">PP 515.2</span>
+        <span id="pp" class="pp">PP 515.2</span>
       </div>
 
       <div class="nav-right">
@@ -36,8 +36,6 @@
         </span>
       </div>
     </nav>
-
-    <main></main>
   </body>
 
   <script>
@@ -50,11 +48,18 @@
     }
 
     function openManufacturersModal() {
-      document.getElementById("manufacturersModal").classList.remove("hidden");
+      document.getElementById("manufacturersModal").classList.add("visible");
     }
 
     function closeManufacturersModal() {
-      document.getElementById("manufacturersModal").classList.add("hidden");
+      document.getElementById("manufacturersModal").classList.remove("visible");
+    }
+
+    function openClassModal() {
+      document.getElementById("classModal").classList.add("visible");
+    }
+    function closeClassModal() {
+      document.getElementById("classModal").classList.remove("visible");
     }
 
     function openEditForm(id) {
@@ -144,14 +149,16 @@
         </form>
         </div>
       `;
-          document.getElementById("carPopup").classList.remove("hidden");
-          document.getElementById("carPopup").style.display = "flex";
+          document.getElementById("carPopup").classList.add("visible");
+          // document.getElementById("carPopup").style.display = "flex";
+          // document.getElementById("carPopup").style.visibility = "visible";
         });
     }
 
     function closeCarPopup() {
-      document.getElementById("carPopup").style.display = "none";
-      document.getElementById("carPopup").classList.add("hidden");
+      // document.getElementById("carPopup").style.display = "none";
+      // document.getElementById("carPopup").style.visibility = "hidden";
+      document.getElementById("carPopup").classList.remove("visible");
     }
 
     // Optional: preload edit modal function here if you want inline editing
@@ -164,26 +171,28 @@
     }
 
     function openCarModal() {
-      document.getElementById("carModal").classList.remove("hidden");
+      document.getElementById("carModal").classList.add("visible");
     }
     function closeCarModal() {
-      document.getElementById("carModal").classList.add("hidden");
+      document.getElementById("carModal").classList.remove("visible");
     }
 
     function openEditManufacturerModal() {
-      document.getElementById("editManufacturerModal").style.display = "block";
+      document.getElementById("editManufacturerModal").classList.add("visible");
     }
 
     function closeEditManufacturerModal() {
-      document.getElementById("editManufacturerModal").style.display = "none";
+      document
+        .getElementById("editManufacturerModal")
+        .classList.remove("visible");
     }
 
     function openEditClassModal() {
-      document.getElementById("editClassModal").style.display = "block";
+      document.getElementById("editClassModal").classList.add("visible");
     }
 
     function closeEditClassModal() {
-      document.getElementById("editClassModal").style.display = "none";
+      document.getElementById("editClassModal").classList.remove("visible");
     }
 
     function updateTime() {
@@ -198,7 +207,22 @@
         now.toLocaleDateString("en-US", options);
     }
 
+    function setPageName() {
+      const pageMap = {
+        "/": "Home",
+        "/manufacturers": "Manufacturers",
+        "/classes": "Classes",
+        "/cars": "Cars",
+      };
+
+      const currentPath = window.location.pathname.split("/")[1];
+      const displayName = pageMap[`/${currentPath}`] || "Unknown";
+
+      document.getElementById("pp").textContent = displayName;
+    }
+
     setInterval(updateTime, 60000);
     updateTime();
+    setPageName();
   </script>
 </html>

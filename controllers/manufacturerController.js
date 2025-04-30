@@ -1,4 +1,3 @@
-// controllers/manufacturersController.js
 const db = require("../db/pool");
 
 module.exports = {
@@ -94,8 +93,9 @@ module.exports = {
       await db.query("DELETE FROM manufacturers WHERE id=$1", [id]);
       res.redirect("/manufacturers");
     } catch (err) {
-      // likely a foreign-key violation
-      res.status(400).send("Cannot delete: linked cars exist.");
+      const error = new Error("Cannot delete manufacturer with cars");
+      error.status = 400;
+      next(error);
     }
   },
 };
