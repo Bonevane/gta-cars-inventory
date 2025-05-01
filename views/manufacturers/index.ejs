@@ -18,14 +18,16 @@
 <!-- Modal HTML -->
 <div id="manufacturersModal" class="modal-overlay">
   <div class="modal-content">
-    <span onclick="closeManufacturersModal()" class="close">&times;</span>
-    <h2>Add Manufacturer</h2>
-    <form method="POST" action="/manufacturers">
-      <label>Name: <input type="text" name="name" required /> </label><br />
-      <label>Country: <input type="text" name="country" /> </label><br />
-      <label>Logo URL: <input type="text" name="logo_url" /> </label><br />
-      <button type="submit">Add</button>
-    </form>
+    <div class="form-content">
+      <span onclick="closeManufacturersModal()" class="close">&times;</span>
+      <h2>Add Manufacturer</h2>
+      <form method="POST" action="/manufacturers">
+        <label>Name: <input type="text" name="name" required /> </label>
+        <label>Country: <input type="text" name="country" /> </label>
+        <label>Logo URL: <input type="text" name="logo_url" /> </label>
+        <button type="submit">Add</button>
+      </form>
+    </div>
   </div>
 </div>
 

@@ -16,15 +16,18 @@
 <!-- Class Modal -->
 <div id="classModal" class="modal-overlay">
   <div class="modal-content">
-    <span onclick="closeClassModal()" class="close">&times;</span>
-    <h2>Add Class</h2>
-    <form method="POST" action="/classes">
-      <label
-        >Name (e.g. A, B, S): <input type="text" name="name" required /> </label
-      ><br />
-      <label>Description: <textarea name="description"></textarea></label><br />
-      <button type="submit">Add</button>
-    </form>
+    <div class="form-content">
+      <span onclick="closeClassModal()" class="close">&times;</span>
+      <h2>Add Class</h2>
+      <form method="POST" action="/classes">
+        <label
+          >Name (e.g. A, B, S):
+          <input type="text" name="name" required />
+        </label>
+        <label>Description: <textarea name="description"></textarea></label>
+        <button type="submit">Add</button>
+      </form>
+    </div>
   </div>
 </div>
 

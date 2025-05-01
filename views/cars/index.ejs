@@ -18,45 +18,47 @@
 <!-- Car Modal -->
 <div id="carModal" class="modal-overlay">
   <div class="modal-content">
-    <span onclick="closeCarModal()" class="close">&times;</span>
-    <h2>Add Car</h2>
-    <form method="POST" action="/cars">
-      <label>Model: <input type="text" name="model" required /> </label><br />
-      <label
-        >Manufacturer:
-        <select name="manufacturer_id">
-          <% manufacturers.forEach(m => { %>
-          <option value="<%= m.id %>"><%= m.name %></option>
-          <% }) %>
-        </select> </label
-      ><br />
-      <label
-        >Class:
-        <select name="class_id">
-          <% classes.forEach(c => { %>
-          <option value="<%= c.id %>"><%= c.name %></option>
-          <% }) %>
-        </select> </label
-      ><br />
-      <label>Price: <input type="number" name="price" required /> </label><br />
-      <label>Image URL: <input type="text" name="image_url" /> </label><br />
-      <label>Engine Power: <input type="number" name="engine_power" /> </label
-      ><br />
-      <label>Weight: <input type="number" name="weight" /> </label><br />
-      <label>Doors: <input type="number" name="doors" /> </label><br />
-      <label>Drive Type: <input type="text" name="drive_type" /> </label><br />
-      <label
-        >Lap Time: <input type="number" step="0.01" name="lap_time" /> </label
-      ><br />
-      <label>Top Speed: <input type="number" name="top_speed" /> </label><br />
-      <label
-        >Drag Coefficient:
-        <input type="number" step="0.01" name="drag_coefficient" /> </label
-      ><br />
-      <label>Brake Force: <input type="number" name="brake_force" /> </label
-      ><br />
-      <button type="submit">Add</button>
-    </form>
+    <div class="form-content">
+      <span onclick="closeCarModal()" class="close">&times;</span>
+      <h2>Add Car</h2>
+      <form method="POST" action="/cars">
+        <label>Model: <input type="text" name="model" required /> </label>
+        <label
+          >Manufacturer:
+          <select name="manufacturer_id">
+            <% manufacturers.forEach(m => { %>
+            <option value="<%= m.id %>"><%= m.name %></option>
+            <% }) %>
+          </select>
+        </label>
+        <label
+          >Class:
+          <select name="class_id">
+            <% classes.forEach(c => { %>
+            <option value="<%= c.id %>"><%= c.name %></option>
+            <% }) %>
+          </select>
+        </label>
+        <label>Price: <input type="number" name="price" required /> </label>
+        <label>Image URL: <input type="text" name="image_url" /> </label>
+        <label
+          >Engine Power: <input type="number" name="engine_power" />
+        </label>
+        <label>Weight: <input type="number" name="weight" /> </label>
+        <label>Doors: <input type="number" name="doors" /> </label>
+        <label>Drive Type: <input type="text" name="drive_type" /> </label>
+        <label
+          >Lap Time: <input type="number" step="0.01" name="lap_time" />
+        </label>
+        <label>Top Speed: <input type="number" name="top_speed" /> </label>
+        <label
+          >Drag Coefficient:
+          <input type="number" step="0.01" name="drag_coefficient" />
+        </label>
+        <label>Brake Force: <input type="number" name="brake_force" /> </label>
+        <button type="submit">Add</button>
+      </form>
+    </div>
   </div>
 </div>
 

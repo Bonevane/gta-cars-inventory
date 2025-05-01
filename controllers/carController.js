@@ -9,6 +9,8 @@ const countryCodeMap = {
   France: "fr",
 };
 
+module.exports = countryCodeMap;
+
 module.exports = {
   async list(req, res, next) {
     try {

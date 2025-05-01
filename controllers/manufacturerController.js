@@ -1,5 +1,14 @@
 const db = require("../db/pool");
 
+const countryCodeMap = {
+  USA: "us",
+  Germany: "de",
+  Japan: "jp",
+  UK: "gb",
+  Italy: "it",
+  France: "fr",
+};
+
 module.exports = {
   // List all manufacturers
   async list(req, res, next) {
@@ -39,14 +48,28 @@ module.exports = {
       const mRes = await db.query("SELECT * FROM manufacturers WHERE id=$1", [
         id,
       ]);
-      const cRes = await db.query(
-        "SELECT * FROM cars WHERE manufacturer_id=$1 ORDER BY model",
+      const carsRes = await db.query(
+        `SELECT 
+            cars.*, 
+            classes.name AS class_name, 
+            manufacturers.name AS manufacturer_name,
+            manufacturers.country AS country
+          FROM cars
+          JOIN classes ON cars.class_id = classes.id
+          JOIN manufacturers ON cars.manufacturer_id = manufacturers.id
+          WHERE manufacturer_id=$1
+          ORDER BY model`,
         [id]
       );
+
+      carsRes.rows.forEach((car) => {
+        car.country = countryCodeMap[car.country] || "xx";
+      });
+
       if (!mRes.rows.length) return res.status(404).send("Not found");
       res.render("manufacturers/show", {
         manufacturer: mRes.rows[0],
-        cars: cRes.rows,
+        cars: carsRes.rows,
       });
     } catch (err) {
       next(err);

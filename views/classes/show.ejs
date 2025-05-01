@@ -32,27 +32,28 @@
 <!-- Edit Modal -->
 <div id="editClassModal" class="modal-overlay">
   <div class="modal-content">
-    <h2>Edit Class</h2>
-    <form action="/classes/<%= carClass.id %>?_method=PUT" method="POST">
-      <label
-        >Name:
-        <input
-          type="text"
-          name="name"
-          value="<%= carClass.name %>"
-          required
-        /> </label
-      ><br />
-      <label
-        >Description:
-        <input
-          type="text"
-          name="description"
-          value="<%= carClass.description %>"
-        /> </label
-      ><br />
-      <button type="submit">Save Changes</button>
-      <button type="button" onclick="closeEditClassModal()">Cancel</button>
-    </form>
+    <div class="form-content">
+      <h2>Edit Class</h2>
+      <form action="/classes/<%= carClass.id %>?_method=PUT" method="POST">
+        <label
+          >Name:
+          <input
+            type="text"
+            name="name"
+            value="<%= carClass.name %>"
+            required
+          />
+        </label>
+        <label
+          >Description:
+          <input
+            type="text"
+            name="description"
+            value="<%= carClass.description %>"
+          />
+        </label>
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
   </div>
 </div>
