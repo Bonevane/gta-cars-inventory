@@ -28,47 +28,8 @@
   </div>
 </div>
 
-<%- include('../partials/footer') %>
-
 <!-- Car Popup container -->
 <%- include('../partials/car-popup') %>
 
 <!-- Edit Modal -->
-<div id="editManufacturerModal" class="modal-overlay">
-  <div class="modal-content">
-    <div class="form-content">
-      <h2>Edit Manufacturer</h2>
-      <form
-        action="/manufacturers/<%= manufacturer.id %>?_method=PUT"
-        method="POST"
-      >
-        <label
-          >Name:
-          <input
-            type="text"
-            name="name"
-            value="<%= manufacturer.name %>"
-            required
-          />
-        </label>
-        <label
-          >Country:
-          <input
-            type="text"
-            name="country"
-            value="<%= manufacturer.country %>"
-          />
-        </label>
-        <label
-          >Logo URL:
-          <input
-            type="text"
-            name="logo_url"
-            value="<%= manufacturer.logo_url %>"
-          />
-        </label>
-        <button type="submit">Save Changes</button>
-      </form>
-    </div>
-  </div>
-</div>
+<%- include('./edit') %>

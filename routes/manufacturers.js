@@ -1,4 +1,3 @@
-// routes/manufacturers.js
 const express = require("express");
 const router = express.Router();
 const ctl = require("../controllers/manufacturerController");

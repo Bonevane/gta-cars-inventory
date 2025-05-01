@@ -36,7 +36,9 @@
     </div>
     <div class="car-info-simple-bottom">
       <text class="small-text">$</text>
-      <text class="large-text price"><%= car.price %></text>
+      <text class="large-text price"
+        ><%= Number(car.price).toLocaleString("en-US") %></text
+      >
     </div>
   </div>
 </div>

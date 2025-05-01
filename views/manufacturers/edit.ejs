@@ -1,20 +1,38 @@
-<%- include('../partials/header') %>
-<h1><%= manufacturer ? "Edit" : "New" %> Manufacturer</h1>
-<form
-  method="POST"
-  action="<%= manufacturer ? '/manufacturers/' + manufacturer.id + '?_method=PUT' : '/manufacturers' %>"
->
-  <label
-    >Name: <input name="name" value="<%= manufacturer?.name || '' %>" /></label
-  ><br />
-  <label
-    >Country:
-    <input name="country" value="<%= manufacturer?.country || '' %>" /></label
-  ><br />
-  <label
-    >Logo URL:
-    <input name="logo_url" value="<%= manufacturer?.logo_url || '' %>" /></label
-  ><br />
-  <button>Submit</button>
-</form>
-<%- include('../partials/footer') %>
+<div id="editManufacturerModal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="form-content">
+      <h2>Edit Manufacturer</h2>
+      <form
+        action="/manufacturers/<%= manufacturer.id %>?_method=PUT"
+        method="POST"
+      >
+        <label
+          >Name:
+          <input
+            type="text"
+            name="name"
+            value="<%= manufacturer.name %>"
+            required
+          />
+        </label>
+        <label
+          >Country:
+          <input
+            type="text"
+            name="country"
+            value="<%= manufacturer.country %>"
+          />
+        </label>
+        <label
+          >Logo URL:
+          <input
+            type="text"
+            name="logo_url"
+            value="<%= manufacturer.logo_url %>"
+          />
+        </label>
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</div>

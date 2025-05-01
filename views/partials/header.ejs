@@ -9,14 +9,12 @@
     <nav class="gt-header">
       <div class="nav-left">
         <span class="logo"><a href="/" class="logo">🏁 AutoList</a></span>
-        <!-- <a href="/">Home</a> -->
         <a href="/manufacturers">Manufacturers</a>
         <a href="/classes">Classes</a>
         <a href="/cars">All Cars</a>
       </div>
 
       <div class="nav-center">
-        <!-- <span class="credits">💰 140,000</span> -->
         <div class="game">
           <img
             src="https://pngimg.com/d/gta_PNG2.png"
@@ -28,8 +26,6 @@
       </div>
 
       <div class="nav-right">
-        <!-- <span class="stat">📈 Collector Lvl 14</span>
-        <span class="stat">🏃 12.4 mi</span> -->
         <span class="time">
           <text id="currentTime">21:20</text>
           <text id="currentDate">27 Jan</text>
@@ -70,6 +66,8 @@
       fetch(`/cars/${id}`)
         .then((res) => res.json())
         .then((car) => {
+          price = Number(car.price).toLocaleString("en-US");
+
           document.getElementById("popupContent").innerHTML = `
         <div class="car-popup-top">
             <img class="car-img" src="${car.image_url}" style="width: 100%" />
@@ -88,14 +86,14 @@
                     </div>
                     <div style="display: flex; justify-content: space-between;">
                         <text class="small-text">Top Speed:</text>
-                        <text class="medium-text">${car.top_speed}</text>
+                        <text class="medium-text">${car.top_speed} km/h</text>
                     </div>
                 </div>
                 </div>
                 <div class="car-info-simple-bottom">
                     <text class="small-text">PRICE:</text>
                     <text class="medium-text">$</text>
-                    <text class="huge-text price">${car.price}</text>
+                    <text class="huge-text price">${price}</text>
                 </div>
             </div>
             </div>
@@ -150,18 +148,13 @@
         </div>
       `;
           document.getElementById("carPopup").classList.add("visible");
-          // document.getElementById("carPopup").style.display = "flex";
-          // document.getElementById("carPopup").style.visibility = "visible";
         });
     }
 
     function closeCarPopup() {
-      // document.getElementById("carPopup").style.display = "none";
-      // document.getElementById("carPopup").style.visibility = "hidden";
       document.getElementById("carPopup").classList.remove("visible");
     }
 
-    // Optional: preload edit modal function here if you want inline editing
     function openEditCarModal(id) {
       fetch(`/cars/${id}/edit`)
         .then((res) => res.text())

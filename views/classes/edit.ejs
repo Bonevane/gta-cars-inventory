@@ -1,21 +1,27 @@
-<%- include('../partials/header') %>
-<h1><%= carClass ? "Edit" : "Add" %> Class</h1>
-<form
-  method="POST"
-  action="<%= carClass ? '/classes/' + carClass.id + '?_method=PUT' : '/classes' %>"
->
-  <label
-    >Name:
-    <input name="name" value="<%= carClass?.name || '' %>" required /> </label
-  ><br />
-
-  <label
-    >Description:
-    <textarea name="description">
-<%= carClass?.description || '' %></textarea
-    ></label
-  ><br />
-
-  <button>Submit</button>
-</form>
-<%- include('../partials/footer') %>
+<div id="editClassModal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="form-content">
+      <h2>Edit Class</h2>
+      <form action="/classes/<%= carClass.id %>?_method=PUT" method="POST">
+        <label
+          >Name:
+          <input
+            type="text"
+            name="name"
+            value="<%= carClass.name %>"
+            required
+          />
+        </label>
+        <label
+          >Description:
+          <input
+            type="text"
+            name="description"
+            value="<%= carClass.description %>"
+          />
+        </label>
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</div>
